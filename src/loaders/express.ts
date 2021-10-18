@@ -15,8 +15,14 @@ export default ({ app }: { app: express.Application }) => {
 
   app.enable('trust proxy');
 
-  app.use(cors());
-
+  // app.use(cors());
+  app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    next();
+  });
   app.use(require('method-override')());
 
   app.use(bodyParser.json());
