@@ -15,20 +15,22 @@ export default ({ app }: { app: express.Application }) => {
 
   app.enable('trust proxy');
 
-  const corsOpts = {
-    origin: '*',
-  
-    methods: [
-      'GET',
-      'POST',
-    ],
-  
-    allowedHeaders: [
-      'Content-Type',
-    ],
-  };
-  
-  app.use(cors(corsOpts));
+  // enable cors
+  app.use(
+    cors({
+      origin: true,
+      optionsSuccessStatus: 200,
+      credentials: true,
+    })
+  );
+  app.options(
+    '*',
+    cors({
+      origin: true,
+      optionsSuccessStatus: 200,
+      credentials: true,
+    })
+  );
 
   app.use(require('method-override')());
 
