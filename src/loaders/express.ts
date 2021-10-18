@@ -4,7 +4,8 @@ import routes from '../api';
 import config from '../config';
 var cors = require('cors');
 export default ({ app }: { app: express.Application }) => {
- 
+  app.use(cors());
+  app.options('*', cors())
 
   app.get('/status', (req, res) => {
     res.status(200).end();
@@ -15,22 +16,7 @@ export default ({ app }: { app: express.Application }) => {
 
   app.enable('trust proxy');
 
-  // enable cors
-  app.use(
-    cors({
-      origin: true,
-      optionsSuccessStatus: 200,
-      credentials: true,
-    })
-  );
-  app.options(
-    '*',
-    cors({
-      origin: true,
-      optionsSuccessStatus: 200,
-      credentials: true,
-    })
-  );
+  // app.use(cors());
 
   app.use(require('method-override')());
 
