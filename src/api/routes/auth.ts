@@ -48,8 +48,8 @@ export default (app: Router) => {
       try {
         const { email, password } = req.body;
         const authServiceInstance = Container.get(AuthService);
-        const { user, token } = await authServiceInstance.SignIn(email, password);
-        return res.json({ user, token }).status(200);
+        const { token } = await authServiceInstance.SignIn(email, password);
+        return res.json({ token }).status(200);
       } catch (e) {
         logger.error('🔥 error: %o',  e );
         return next(e);
