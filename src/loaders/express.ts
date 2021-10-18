@@ -5,7 +5,7 @@ import config from '../config';
 var cors = require('cors');
 export default ({ app }: { app: express.Application }) => {
  
-  app.use(cors());
+
   app.get('/status', (req, res) => {
     res.status(200).end();
   });
@@ -13,7 +13,22 @@ export default ({ app }: { app: express.Application }) => {
     res.status(200).end();
   });
 
-  app.enable('trust proxy');  
+  app.enable('trust proxy');
+
+  const corsOpts = {
+    origin: '*',
+  
+    methods: [
+      'GET',
+      'POST',
+    ],
+  
+    allowedHeaders: [
+      'Content-Type',
+    ],
+  };
+  
+  app.use(cors(corsOpts));
 
   app.use(require('method-override')());
 
